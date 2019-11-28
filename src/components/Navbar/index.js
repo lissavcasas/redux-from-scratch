@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import NavbarPage from '../../pages/Navbar/Navbar';
 import { connect } from 'react-redux';
 import findSuggestions from '../../redux/actions/findSuggestions';
+import findResults from '../../redux/actions/findResults';
+import { withRouter } from 'react-router-dom'
 
 class Navbar extends Component {
   constructor(props) {
@@ -12,7 +14,7 @@ class Navbar extends Component {
     }
   }
 
-  onChangeText = (text)  => {
+  onChangeText = (text) => {
     this.setState({
       text
     })
@@ -21,7 +23,12 @@ class Navbar extends Component {
   };
 
   onChangeSelection = (text) => {
+    this.setState({
+      text
+    })
 
+    this.props.findResults(text);
+  /*   this.props.history.push('./results') */
   };
 
   render() {
@@ -55,7 +62,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   findSuggestions,
+  findResults //connect the action!
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

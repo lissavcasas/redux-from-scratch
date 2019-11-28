@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import ResultsPage from '../../pages/Results/ResultsPage';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 
 class Results extends Component {
   render() {
-    const { suggestions } = this.props;
-    console.log(suggestions)
+    const { results } = this.props;
+    console.log(results)
     console.log(this.props)
 
     return (
       <div>
-        <ResultsPage suggestions={suggestions} />
+        <ResultsPage
+          results={results}
+          goTo={(path) => {
+            this.props.history.push(path);
+          }} />
       </div>
     )
   }
@@ -19,11 +24,10 @@ class Results extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    suggestions: state.suggestions,
-    hola: '123'
+    results: state.results,
   }
 };
 
 
-export default connect(mapStateToProps)(Results);
+export default withRouter(connect(mapStateToProps)(Results));
 
